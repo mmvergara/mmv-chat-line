@@ -36,11 +36,12 @@ insert into storage.buckets (id, name)
   values ('avatars', 'avatars');
 -- Add Policies in storage bucket
 
-
-
-
-
-
+CREATE TABLE rooms (
+    id uuid PRIMARY KEY,
+    name VARCHAR(255) NOT NULL CHECK (char_length(name) > 6),
+    password VARCHAR(255) NOT NULL CHECK (char_length(name) > 6),
+    created_at TIMESTAMP NOT NULL
+);
 
 CREATE TABLE room_participants (
     id uuid PRIMARY KEY,
@@ -52,15 +53,9 @@ CREATE TABLE room_participants (
 
 CREATE TABLE room_messages (
     id uuid PRIMARY KEY,
-    user_id uuid REFERENCES user_profiles(id) ON DELETE CASCADE,
+    user_id uuid REFERENCES profiles(id) ON DELETE CASCADE,
     room_id uuid REFERENCES rooms(id) ON DELETE CASCADE,
-    message TEXT NOT NULL CHECK (char_length(name) > 6),
+    message TEXT NOT NULL CHECK (char_length(message) > 6),
     created_at TIMESTAMP NOT NULL
 );
 
-CREATE TABLE rooms (
-    id uuid PRIMARY KEY,
-    name VARCHAR(255) NOT NULL CHECK (char_length(name) > 6),
-    password VARCHAR(255) NOT NULL CHECK (char_length(name) > 6)
-    created_at TIMESTAMP NOT NULL
-);
