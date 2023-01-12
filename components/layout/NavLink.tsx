@@ -8,11 +8,11 @@ type props = {
 };
 const NavLink: React.FC<props> = ({ name, url }) => {
   const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === "dark";
   const { hovered, ref } = useHover();
   const { colors } = useMantineTheme();
   const router = useRouter();
 
-  const isDark = colorScheme === "dark";
   return (
     <div
       ref={ref}

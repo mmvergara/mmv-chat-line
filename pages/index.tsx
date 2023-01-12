@@ -1,17 +1,7 @@
-import { Button, Container, Paper, Skeleton } from "@mantine/core";
+import { Button, Container, Paper, Text } from "@mantine/core";
 import Head from "next/head";
-import { useEffect } from "react";
-import useKanyeRest from "../hooks/useKanyeRest";
 
 export default function Home() {
-  const { data, error, isLoading, mutate } = useKanyeRest();
-
-  useEffect(() => {
-    mutate();
-  }, [mutate]);
-
-  if (error) return <h1>ERORRR</h1>;
-
   return (
     <>
       <Head>
@@ -21,20 +11,16 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Container size={600} p={20}>
-        {isLoading ? (
-          <Paper>
-            <Skeleton height={8} radius='xl' />
-            <Skeleton height={8} mt={6} radius='xl' />
-            <Skeleton height={8} mt={6} width='70%' radius='xl' />
+        <Paper component='section' shadow='xs' p='md'>
+          <Text component='h1' size={30}>
+            Chat Line
+          </Text>
+          <Text component='p'>A Light Simple ID based chat app made using Nextjs, Mantine UI, Supabase 🤯</Text>
+          <Paper display='flex' sx={{ justifyContent: "left", gap: "20px", margin: "1em 0em" }}>
+            <Button variant='gradient'>Get Started</Button>
+            <Button variant='light'>Github</Button>
           </Paper>
-        ) : (
-          <>
-            <p>{data}</p>
-            <Button variant='filled' color={""} onClick={() => mutate()}>
-              Get Kanye quote
-            </Button>
-          </>
-        )}
+        </Paper>
       </Container>
     </>
   );

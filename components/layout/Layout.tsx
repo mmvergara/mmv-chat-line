@@ -41,7 +41,7 @@ const Layout: React.FC<{ children: JSX.Element[] | JSX.Element }> = ({ children 
           width={{ sm: 200, lg: 300 }}
         >
           <NavLink name='Home' url='/' />
-          <NavLink name='Login' url='/auth/login' />
+          <NavLink name='Login' url='/auth/signin' />
           <NavLink name='Signup' url='/auth/signup' />
           <NavLink name='Create New Rrom' url='/room/create' />
           <NavLink name='Join Room' url='/auth/signup' />
