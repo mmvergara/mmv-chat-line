@@ -1,6 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "next", "eslint:recommended"],
-  "globals": { "React": "readonly" },
+  "globals": { "React": "readonly", "JSX": true },
   "rules": {
     "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_" }]
   }

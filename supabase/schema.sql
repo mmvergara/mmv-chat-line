@@ -50,7 +50,6 @@ CREATE TABLE room_participants (
     created_at TIMESTAMP NOT NULL
 );
 
-
 CREATE TABLE room_messages (
     id uuid PRIMARY KEY,
     user_id uuid REFERENCES profiles(id) ON DELETE CASCADE,
