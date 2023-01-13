@@ -1,5 +1,8 @@
-import { IconLogout, IconLogin, IconHome2, IconSquareRoundedPlus, IconWalk } from "@tabler/icons";
+import { IconLogout, IconLogin, IconHome2, TablerIcon, IconList } from "@tabler/icons";
+import { IconSquareRoundedPlus, IconWalk, IconSettings } from "@tabler/icons";
+
 import { createStyles, Navbar, Group } from "@mantine/core";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { MantineLogo } from "@mantine/ds";
 import Link from "next/link";
 import useAppTheme from "../../hooks/useAppTheme";
@@ -61,23 +64,32 @@ const useStyles = createStyles((theme, _params, getRef) => {
   };
 });
 
-const data = [
-  { auth: false, link: "/", label: "Home", icon: IconHome2 },
-  { auth: false, link: "/room/join", label: "Join Room", icon: IconWalk },
-  { auth: false, link: "/room/create", label: "Create New Room", icon: IconSquareRoundedPlus },
-  { auth: false, link: "/auth/signin", label: "Sign In", icon: IconLogin },
-];
+type linkData = { show: boolean; link: string; label: string; icon: TablerIcon };
 
 const NavbarSimple = () => {
+  const supabase = useSupabaseClient();
+  const user = useUser();
   const { classes, cx } = useStyles();
   const { colors, isDark } = useAppTheme();
 
-  const links = data.map((item) => (
-    <Link className={cx(classes.link)} href={item.link} key={item.label}>
-      <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
-    </Link>
-  ));
+  const data: linkData[] = [
+    { show: true, link: "/", label: "Home", icon: IconHome2 },
+    { show: !!user, link: "/room/list", label: "My Rooms", icon: IconList },
+    { show: true, link: "/room/join", label: "Join Room", icon: IconWalk },
+    { show: !!user, link: "/room/create", label: "Create New Room", icon: IconSquareRoundedPlus },
+    { show: !user, link: "/auth/signin", label: "Sign In", icon: IconLogin },
+    { show: !!user, link: "/settings", label: "Settings", icon: IconSettings },
+  ];
+
+  const links = data.map((link) => {
+    if (!link.show) return <></>;
+    return (
+      <Link className={cx(classes.link)} href={link.link} key={link.label}>
+        <link.icon className={classes.linkIcon} stroke={1.5} />
+        <span>{link.label}</span>
+      </Link>
+    );
+  });
 
   return (
     <Navbar height='auto' width={{ sm: 300 }} p='md' bg={isDark ? colors.dark[7] : colors.gray[3]}>
@@ -88,12 +100,22 @@ const NavbarSimple = () => {
         {links}
       </Navbar.Section>
 
-      <Navbar.Section className={classes.footer}>
-        <Link href='#' className={classes.link} onClick={(event) => event.preventDefault()}>
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </Link>
-      </Navbar.Section>
+      {user && (
+        <Navbar.Section className={classes.footer}>
+          <Link
+            href='#'
+            className={classes.link}
+            onClick={async (event) => {
+              event.preventDefault();
+              const data = await supabase.auth.signOut();
+              console.log({ data });
+            }}
+          >
+            <IconLogout className={classes.linkIcon} stroke={1.5} />
+            <span>Logout</span>
+          </Link>
+        </Navbar.Section>
+      )}
     </Navbar>
   );
 };

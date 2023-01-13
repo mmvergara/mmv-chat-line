@@ -20,7 +20,10 @@ const SignUp: React.FC = () => {
     await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: "/" } });
   };
 
-  const handleSignIn = async () => login.mutate();
+  const handleSignIn = async () => {
+    login.mutate();
+    router.push("/room/list");
+  };
 
   const formik = useFormik({
     initialValues: { email: "", password: "" },
