@@ -1,37 +1,26 @@
-import { Button, ButtonProps, Container, Loader, Paper, Text, TextInput } from "@mantine/core";
+import { Button, Container, Loader, Paper, Text, TextInput } from "@mantine/core";
 import { IconMail, IconPassword } from "@tabler/icons";
 import { authValidationSchema } from "../../schemas/validation-schema";
-import { useFormik } from "formik";
-import { supabase } from "../../supabase/browser-client";
-import useAppTheme from "../../hooks/useAppTheme";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import Image from "next/image";
-import { Provider } from "@supabase/supabase-js";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { GithubIcon } from "@mantine/ds";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import { Provider } from "@supabase/supabase-js";
+import { DBTypes } from "../../supabase/db-types";
+import useAppTheme from "../../hooks/useAppTheme";
+import Image from "next/image";
+import useSignIn from "../../hooks/useSignin";
+
 const SignUp: React.FC = () => {
+  const supabase = useSupabaseClient<DBTypes>();
   const { colors, isDark } = useAppTheme();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const handleOAuth = async (provider: Provider) => {
-    setIsLoading(true);
     await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: "/" } });
-    setIsLoading(false);
   };
-  const handleSignIn = async () => {
-    setIsLoading(true);
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: formik.values.email,
-        password: formik.values.password,
-      });
-      console.log({ data, error });
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
+
+  const handleSignIn = async () => login.mutate();
 
   const formik = useFormik({
     initialValues: { email: "", password: "" },
@@ -39,6 +28,12 @@ const SignUp: React.FC = () => {
     onSubmit: handleSignIn,
   });
 
+  const useSignInParams = {
+    email: formik.values.email,
+    password: formik.values.password,
+    supabase,
+  };
+  const login = useSignIn(useSignInParams);
   const emailError = formik.touched.email && formik.errors.email;
   const passwordError = formik.touched.password && formik.errors.password;
   return (
@@ -87,9 +82,11 @@ const SignUp: React.FC = () => {
           inputWrapperOrder={["label", "input", "description", "error"]}
         />
         <Button type='submit' variant='gradient' mt={15} sx={{ width: "auto" }}>
-          {isLoading ? <Loader color='white' size='sm' /> : "Sign In"}
+          {login.isLoading ? <Loader color='white' size='sm' /> : "Sign In"}
         </Button>{" "}
-        <Text component="strong" align='center' my={10}>or</Text>
+        <Text component='strong' align='center' my={10}>
+          or
+        </Text>
         <Button
           onClick={() => router.push("/auth/signup")}
           type='button'

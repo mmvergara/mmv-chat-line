@@ -2,36 +2,29 @@ import { Button, Container, Loader, Paper, Text, TextInput } from "@mantine/core
 import { IconMail, IconPassword } from "@tabler/icons";
 import { authValidationSchema } from "../../schemas/validation-schema";
 import { useFormik } from "formik";
-import { supabase } from "../../supabase/browser-client";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import useAppTheme from "../../hooks/useAppTheme";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import useSignUp from "../../hooks/useSignup";
 
 const SignUp: React.FC = () => {
+  const supabase = useSupabaseClient();
   const { colors, isDark } = useAppTheme();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const handleSignUp = async () => {
-    setIsLoading(true);
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email: formik.values.email,
-        password: formik.values.password,
-      });
-      console.log({ data, error });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handleSignUp = async () => signUp.mutate();
+
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: authValidationSchema,
     onSubmit: handleSignUp,
   });
-
+  const useSignUpParams = {
+    email: formik.values.email,
+    password: formik.values.password,
+    supabase,
+  };
+  const signUp = useSignUp(useSignUpParams);
   const emailError = formik.touched.email && formik.errors.email;
   const passwordError = formik.touched.password && formik.errors.password;
   return (
@@ -80,7 +73,7 @@ const SignUp: React.FC = () => {
           inputWrapperOrder={["label", "input", "description", "error"]}
         />
         <Button type='submit' variant='gradient' mt={15} sx={{ width: "auto" }}>
-          {isLoading ? <Loader color='white' size='sm' /> : "Create Account"}
+          {signUp.isLoading ? <Loader color='white' size='sm' /> : "Create Account"}
         </Button>{" "}
         <Button
           onClick={() => router.push("/auth/signin")}

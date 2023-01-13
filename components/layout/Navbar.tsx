@@ -1,4 +1,4 @@
-import { IconLogout, IconLogin, IconHome2, IconSquareRoundedPlus } from "@tabler/icons";
+import { IconLogout, IconLogin, IconHome2, IconSquareRoundedPlus, IconWalk } from "@tabler/icons";
 import { createStyles, Navbar, Group } from "@mantine/core";
 import { MantineLogo } from "@mantine/ds";
 import Link from "next/link";
@@ -63,12 +63,12 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
 const data = [
   { auth: false, link: "/", label: "Home", icon: IconHome2 },
-  { auth: false, link: "/room/join", label: "Join Room", icon: IconSquareRoundedPlus },
-  { auth: false, link: "/room/create", label: "Home", icon: IconHome2 },
+  { auth: false, link: "/room/join", label: "Join Room", icon: IconWalk },
+  { auth: false, link: "/room/create", label: "Create New Room", icon: IconSquareRoundedPlus },
   { auth: false, link: "/auth/signin", label: "Sign In", icon: IconLogin },
 ];
 
-export function NavbarSimple() {
+const NavbarSimple = () => {
   const { classes, cx } = useStyles();
   const { colors, isDark } = useAppTheme();
 
@@ -80,7 +80,7 @@ export function NavbarSimple() {
   ));
 
   return (
-    <Navbar height='auto' width={{ sm: 300 }} p='md' bg={isDark ? colors.dark[9] : colors.gray[3]}>
+    <Navbar height='auto' width={{ sm: 300 }} p='md' bg={isDark ? colors.dark[7] : colors.gray[3]}>
       <Navbar.Section grow>
         <Group className={classes.header} position='apart'>
           <MantineLogo />
@@ -96,4 +96,6 @@ export function NavbarSimple() {
       </Navbar.Section>
     </Navbar>
   );
-}
+};
+
+export default NavbarSimple;
