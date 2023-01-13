@@ -6,6 +6,8 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { MantineLogo } from "@mantine/ds";
 import Link from "next/link";
 import useAppTheme from "../../hooks/useAppTheme";
+import { SyntheticEvent } from "react";
+import { showNotification } from "@mantine/notifications";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
@@ -91,6 +93,12 @@ const NavbarSimple = () => {
     );
   });
 
+  const handleLogout = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    const { error } = await supabase.auth.signOut();
+    if (error) showNotification({ message: error.message, color: "red" });
+  };
+
   return (
     <Navbar height='auto' width={{ sm: 300 }} p='md' bg={isDark ? colors.dark[7] : colors.gray[3]}>
       <Navbar.Section grow>
@@ -102,15 +110,7 @@ const NavbarSimple = () => {
 
       {user && (
         <Navbar.Section className={classes.footer}>
-          <Link
-            href='#'
-            className={classes.link}
-            onClick={async (event) => {
-              event.preventDefault();
-              const data = await supabase.auth.signOut();
-              console.log({ data });
-            }}
-          >
+          <Link href='#' className={classes.link} onClick={handleLogout}>
             <IconLogout className={classes.linkIcon} stroke={1.5} />
             <span>Logout</span>
           </Link>

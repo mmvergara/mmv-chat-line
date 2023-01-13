@@ -1,8 +1,8 @@
 import { Button, Container, Paper, Text } from "@mantine/core";
 import { GithubIcon } from "@mantine/ds";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import useAppTheme from "../hooks/useAppTheme";
+import Head from "next/head";
 
 export default function Home() {
   const { colors, isDark, textColor } = useAppTheme();

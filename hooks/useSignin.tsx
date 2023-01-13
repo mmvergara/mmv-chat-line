@@ -1,4 +1,6 @@
+import { showNotification } from "@mantine/notifications";
 import { SupabaseClient } from "@supabase/auth-helpers-react";
+import Router from "next/router";
 import { useMutation } from "react-query";
 import { DBTypes } from "../supabase/db-types";
 
@@ -14,8 +16,11 @@ const singIn = async ({ email, password, supabase }: auth) => {
     password,
   });
   if (error) {
-    throw new Error(error.message);
+    showNotification({ message: error?.message, color: "red" });
+    throw new Error(error?.message);
   }
+  Router.push("/room/list");
+  showNotification({ message: "Login Success", color: "green" });
   return data;
 };
 

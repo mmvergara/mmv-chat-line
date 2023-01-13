@@ -1,3 +1,4 @@
+import { NotificationsProvider } from "@mantine/notifications";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import type { AppProps } from "next/app";
 import { useState } from "react";
@@ -29,9 +30,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <Hydrate state={pageProps.dehydratedState}>
           <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
             <MantineProvider theme={{ colorScheme }}>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+              <NotificationsProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </NotificationsProvider>
             </MantineProvider>
           </ColorSchemeProvider>
         </Hydrate>

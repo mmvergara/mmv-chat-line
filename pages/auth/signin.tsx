@@ -10,6 +10,7 @@ import { DBTypes } from "../../supabase/db-types";
 import useAppTheme from "../../hooks/useAppTheme";
 import Image from "next/image";
 import useSignIn from "../../hooks/useSignin";
+import { showNotification } from "@mantine/notifications";
 
 const SignUp: React.FC = () => {
   const supabase = useSupabaseClient<DBTypes>();
@@ -22,7 +23,6 @@ const SignUp: React.FC = () => {
 
   const handleSignIn = async () => {
     login.mutate();
-    router.push("/room/list");
   };
 
   const formik = useFormik({
@@ -121,6 +121,13 @@ const SignUp: React.FC = () => {
           })}
         >
           Login with Github
+        </Button>
+        <Button
+          onClick={() => {
+            showNotification({ message: "yoyo", color: "red" });
+          }}
+        >
+          TESTT
         </Button>
       </Paper>
     </Container>
