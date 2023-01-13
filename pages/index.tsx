@@ -27,13 +27,14 @@ export default function Home() {
           <Paper
             display='flex'
             bg={isDark ? colors.gray[9] : "white"}
-            sx={{ justifyContent: "left", gap: "20px", margin: "1em 0em" }}
+            sx={{ justifyContent: "center", gap: "20px", margin: "1em 0em", flexWrap: "wrap" }}
           >
             <Button variant='gradient' onClick={handleGetStarted}>
               Get Started 🌟
             </Button>
             <Button variant='light'>
-               <Text mr={6}>Github Repo</Text><GithubIcon size={16} />
+              <Text mr={6}>Github Repo</Text>
+              <GithubIcon size={16} />
             </Button>
             <Button variant='light'>Documentation 📃</Button>
           </Paper>

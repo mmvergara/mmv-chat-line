@@ -14,6 +14,7 @@ const Layout: React.FC<{ children: JSX.Element[] | JSX.Element }> = ({ children 
         main: {
           color: isDark ? colors.gray[1] : colors.dark[8],
           background: isDark ? colors.dark[7] : colors.gray[2],
+
         },
       }}
       navbarOffsetBreakpoint='md'
