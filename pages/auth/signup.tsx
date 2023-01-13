@@ -8,10 +8,9 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import useSignUp from "../../hooks/useSignup";
 
 const SignUp: React.FC = () => {
-  const supabase = useSupabaseClient();
   const { colors, isDark } = useAppTheme();
+  const supabase = useSupabaseClient();
   const router = useRouter();
-
   const handleSignUp = async () => signUp.mutate();
 
   const formik = useFormik({
@@ -78,7 +77,7 @@ const SignUp: React.FC = () => {
         <Button
           onClick={() => router.push("/auth/signin")}
           type='button'
-          variant='outline'
+          variant='subtle'
           mt={10}
           sx={{ width: "auto" }}
         >

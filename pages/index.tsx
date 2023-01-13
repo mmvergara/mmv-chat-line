@@ -1,12 +1,13 @@
 import { Button, Container, Paper, Text } from "@mantine/core";
+import { GithubIcon } from "@mantine/ds";
 import Head from "next/head";
-import  { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import useAppTheme from "../hooks/useAppTheme";
 
 export default function Home() {
   const { colors, isDark, textColor } = useAppTheme();
-  const router = useRouter()
-  const handleGetStarted = () => router.push("/auth/signin")
+  const router = useRouter();
+  const handleGetStarted = () => router.push("/auth/signin");
   return (
     <>
       <Head>
@@ -28,9 +29,13 @@ export default function Home() {
             bg={isDark ? colors.gray[9] : "white"}
             sx={{ justifyContent: "left", gap: "20px", margin: "1em 0em" }}
           >
-            <Button variant='gradient' onClick={handleGetStarted}>Get Started</Button>
-            <Button variant='light'>Github</Button>
-            <Button variant='light'>Docs 📃</Button>
+            <Button variant='gradient' onClick={handleGetStarted}>
+              Get Started 🌟
+            </Button>
+            <Button variant='light'>
+               <Text mr={6}>Github Repo</Text><GithubIcon size={16} />
+            </Button>
+            <Button variant='light'>Documentation 📃</Button>
           </Paper>
         </Paper>
       </Container>

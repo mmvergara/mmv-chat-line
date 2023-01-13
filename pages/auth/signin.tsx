@@ -1,5 +1,5 @@
 import { Button, Container, Loader, Paper, Text, TextInput } from "@mantine/core";
-import { IconMail, IconPassword } from "@tabler/icons";
+import { IconMail, IconPassword, IconUserPlus } from "@tabler/icons";
 import { authValidationSchema } from "../../schemas/validation-schema";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { GithubIcon } from "@mantine/ds";
@@ -90,11 +90,11 @@ const SignUp: React.FC = () => {
         <Button
           onClick={() => router.push("/auth/signup")}
           type='button'
-          variant='outline'
+          variant='default'
           mt={3}
           sx={{ width: "auto" }}
         >
-          Create Account
+          <IconUserPlus size={20} /> <Text ml={4}>Create Account</Text>
         </Button>
         <Button type='button' mt={10} variant='default' color='gray' onClick={() => handleOAuth("google")}>
           <Image
@@ -110,10 +110,10 @@ const SignUp: React.FC = () => {
           onClick={() => handleOAuth("github")}
           leftIcon={<GithubIcon size={16} />}
           sx={(theme) => ({
-            backgroundColor: theme.colors.dark[theme.colorScheme === "dark" ? 9 : 6],
+            backgroundColor: theme.colors.dark[theme.colorScheme === "dark" ? 9 : 5],
             color: "#fff",
             "&:hover": {
-              backgroundColor: theme.colors.dark[theme.colorScheme === "dark" ? 9 : 6],
+              backgroundColor: theme.colors.dark[theme.colorScheme === "dark" ? 9 : 5],
             },
           })}
         >

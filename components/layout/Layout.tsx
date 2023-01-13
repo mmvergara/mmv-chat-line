@@ -16,17 +16,16 @@ const Layout: React.FC<{ children: JSX.Element[] | JSX.Element }> = ({ children 
           background: isDark ? colors.dark[7] : colors.gray[2],
         },
       }}
-      navbarOffsetBreakpoint='sm'
-      asideOffsetBreakpoint='sm'
+      navbarOffsetBreakpoint='md'
       navbar={
-        <NavbarContainer withBorder={false} hiddenBreakpoint='sm' hidden={!opened} width={{ sm: 200, lg: 300 }}>
+        <NavbarContainer withBorder={false} hiddenBreakpoint='md' hidden={!opened} width={{ sm: 200, lg: 300 }}>
           <Navbar />
         </NavbarContainer>
       }
       header={
         <Header bg={isDark ? colors.dark[7] : colors.gray[4]} height={{ base: 50, md: 70 }} p='md'>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "100%" }}>
-            <MediaQuery largerThan='sm' styles={{ display: "none" }}>
+            <MediaQuery largerThan='md' styles={{ display: "none" }}>
               <Burger opened={opened} onClick={() => setOpened((o) => !o)} size='sm' color={colors.gray[6]} mr='xl' />
             </MediaQuery>
             <h2 style={{ color: isDark ? "white" : "black" }}>Chat Line</h2>
