@@ -20,7 +20,7 @@ const signUp = async ({ email, password, supabase }: auth) => {
     throw new Error(error?.message);
   }
   Router.push("/");
-  showNotification({ message: "Login Success", color: "green" });
+  showNotification({ message: "Sign Up success", color: "green" });
   return data;
 };
 

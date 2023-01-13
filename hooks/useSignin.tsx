@@ -20,7 +20,7 @@ const singIn = async ({ email, password, supabase }: auth) => {
     throw new Error(error?.message);
   }
   Router.push("/room/list");
-  showNotification({ message: "Login Success", color: "green" });
+  showNotification({ message: "Sign in success", color: "green" });
   return data;
 };
 

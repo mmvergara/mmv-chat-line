@@ -96,7 +96,8 @@ const NavbarSimple = () => {
   const handleLogout = async (e: SyntheticEvent) => {
     e.preventDefault();
     const { error } = await supabase.auth.signOut();
-    if (error) showNotification({ message: error.message, color: "red" });
+    if (error) return showNotification({ message: error.message, color: "red" });
+    showNotification({ message: "Sign out success", color: "green" });
   };
 
   return (
