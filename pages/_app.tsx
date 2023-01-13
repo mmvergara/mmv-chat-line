@@ -2,7 +2,7 @@ import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import type { AppProps } from "next/app";
 import { useState } from "react";
 import "../styles/globals.css";
-import { ColorScheme, ColorSchemeProvider } from "@mantine/core";
+import { ColorScheme, ColorSchemeProvider, MantineProvider } from "@mantine/core";
 import Layout from "../components/layout/Layout";
 const config = {
   defaultOptions: {
@@ -23,9 +23,11 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <MantineProvider theme={{ colorScheme }}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </MantineProvider>
         </ColorSchemeProvider>
       </Hydrate>
     </QueryClientProvider>

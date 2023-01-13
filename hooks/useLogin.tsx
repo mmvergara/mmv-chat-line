@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import supabase from "../supabase/client";
+import supabase from "../supabase/browser-client";
 
 type auth = {
   email: string;

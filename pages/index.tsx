@@ -1,7 +1,12 @@
 import { Button, Container, Paper, Text } from "@mantine/core";
 import Head from "next/head";
+import  { useRouter } from "next/router";
+import useAppTheme from "../hooks/useAppTheme";
 
 export default function Home() {
+  const { colors, isDark, textColor } = useAppTheme();
+  const router = useRouter()
+  const handleGetStarted = () => router.push("/auth/signin")
   return (
     <>
       <Head>
@@ -11,14 +16,21 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Container size={600} p={20}>
-        <Paper component='section' shadow='xs' p='md'>
-          <Text component='h1' size={30}>
+        <Paper component='section' shadow='xs' p='md' bg={isDark ? colors.gray[9] : "white"}>
+          <Text sx={{ color: textColor }} component='h1' size={30}>
             Chat Line
           </Text>
-          <Text component='p'>A Light Simple ID based chat app made using Nextjs, Mantine UI, Supabase 🤯</Text>
-          <Paper display='flex' sx={{ justifyContent: "left", gap: "20px", margin: "1em 0em" }}>
-            <Button variant='gradient'>Get Started</Button>
+          <Text component='p' sx={{ color: textColor }}>
+            A Light Simple ID based chat app made using Nextjs, Mantine UI, Supabase 🤯
+          </Text>
+          <Paper
+            display='flex'
+            bg={isDark ? colors.gray[9] : "white"}
+            sx={{ justifyContent: "left", gap: "20px", margin: "1em 0em" }}
+          >
+            <Button variant='gradient' onClick={handleGetStarted}>Get Started</Button>
             <Button variant='light'>Github</Button>
+            <Button variant='light'>Docs 📃</Button>
           </Paper>
         </Paper>
       </Container>
