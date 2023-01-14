@@ -9,8 +9,8 @@ import { showNotification } from "@mantine/notifications";
 const JoinRoom: React.FC = () => {
   const supabase = useSupabaseClient<DBTypes>();
   const user = useUser();
-  const { colors, isDark } = useAppTheme();
   const router = useRouter();
+  const { colors, isDark } = useAppTheme();
   const [roomId, setRoomId] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -28,7 +28,7 @@ const JoinRoom: React.FC = () => {
       });
       return setIsLoading(false);
     }
-
+    router.push(`/room/${roomId}`);
     setIsLoading(false);
   };
   return (

@@ -1,10 +1,9 @@
 # MMV Chat Line
 
-- Allow users to login and signup
-- Allow users 
+- Create room ui
+- Allow authenticated users to create rooms
 
 
-- Allow users to create rooms
-
-- Allow users to join rooms using a room name and password
+- Message Room UI
+- Allow users to see messages on room they are participating
 - Allow to create message on rooms they are participating

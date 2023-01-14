@@ -4,7 +4,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { DBTypes } from "../../supabase/db-types";
 import useAppTheme from "../../hooks/useAppTheme";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 const CreateRoom: React.FC = () => {
   const supabase = useSupabaseClient<DBTypes>();
@@ -12,6 +12,7 @@ const CreateRoom: React.FC = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const handleCreateNewRoom = async (e: SyntheticEvent) => {};
   return (
     <Container size={600} p={20}>
       <Paper
