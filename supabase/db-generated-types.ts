@@ -35,44 +35,44 @@ export interface Database {
       room_messages: {
         Row: {
           created_at: string
-          id: string
+          id: number
           message: string
-          room_id: string | null
-          user_id: string | null
+          room_id: string
+          user_id: string
         }
         Insert: {
-          created_at: string
-          id: string
+          created_at?: string
+          id?: number
           message: string
-          room_id?: string | null
-          user_id?: string | null
+          room_id: string
+          user_id: string
         }
         Update: {
           created_at?: string
-          id?: string
+          id?: number
           message?: string
-          room_id?: string | null
-          user_id?: string | null
+          room_id?: string
+          user_id?: string
         }
       }
       room_participants: {
         Row: {
           created_at: string
-          id: string
-          room_id: string | null
-          user_id: string | null
+          id: number
+          room_id: string
+          user_id: string
         }
         Insert: {
-          created_at: string
-          id: string
-          room_id?: string | null
-          user_id?: string | null
+          created_at?: string
+          id?: number
+          room_id: string
+          user_id: string
         }
         Update: {
           created_at?: string
-          id?: string
-          room_id?: string | null
-          user_id?: string | null
+          id?: number
+          room_id?: string
+          user_id?: string
         }
       }
       rooms: {
@@ -80,19 +80,16 @@ export interface Database {
           created_at: string
           id: string
           name: string
-          password: string
         }
         Insert: {
-          created_at: string
+          created_at?: string
           id: string
           name: string
-          password: string
         }
         Update: {
           created_at?: string
           id?: string
           name?: string
-          password?: string
         }
       }
     }

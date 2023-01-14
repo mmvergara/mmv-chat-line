@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-types":"npx supabase gen types typescript --project-id 'vwqfraawldokcxunewmr' --schema public > supabase/db-generated-types.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",

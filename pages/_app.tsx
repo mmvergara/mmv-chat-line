@@ -7,6 +7,7 @@ import { ColorScheme, ColorSchemeProvider, MantineProvider } from "@mantine/core
 import Layout from "../components/layout/Layout";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
+import { useLocalStorage } from "@mantine/hooks";
 
 const config = {
   defaultOptions: {
@@ -19,8 +20,12 @@ const config = {
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient(config));
   const [supabase] = useState(() => createBrowserSupabaseClient());
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+    key: 'mantine-color-scheme',
+    defaultValue: 'light',
+    getInitialValueInEffect: true,
+  });
 
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 

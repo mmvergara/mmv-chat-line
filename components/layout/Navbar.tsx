@@ -1,9 +1,7 @@
 import { IconLogout, IconLogin, IconHome2, TablerIcon, IconList } from "@tabler/icons";
 import { IconSquareRoundedPlus, IconWalk, IconSettings } from "@tabler/icons";
-
-import { createStyles, Navbar, Group } from "@mantine/core";
+import { createStyles, Navbar, Group, Text } from "@mantine/core";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { MantineLogo } from "@mantine/ds";
 import Link from "next/link";
 import useAppTheme from "../../hooks/useAppTheme";
 import { SyntheticEvent } from "react";
@@ -69,8 +67,8 @@ const useStyles = createStyles((theme, _params, getRef) => {
 type linkData = { show: boolean; link: string; label: string; icon: TablerIcon };
 
 const NavbarSimple = () => {
-  const supabase = useSupabaseClient();
   const user = useUser();
+  const supabase = useSupabaseClient();
   const { classes, cx } = useStyles();
   const { colors, isDark } = useAppTheme();
 
@@ -84,7 +82,7 @@ const NavbarSimple = () => {
   ];
 
   const links = data.map((link) => {
-    if (!link.show) return <></>;
+    if (!link.show) return <div key={link.label}></div>;
     return (
       <Link className={cx(classes.link)} href={link.link} key={link.label}>
         <link.icon className={classes.linkIcon} stroke={1.5} />
@@ -104,7 +102,9 @@ const NavbarSimple = () => {
     <Navbar height='auto' width={{ sm: 300 }} p='md' bg={isDark ? colors.dark[7] : colors.gray[3]}>
       <Navbar.Section grow>
         <Group className={classes.header} position='apart'>
-          <MantineLogo />
+          <Text color={isDark ? colors.dark[1] : colors.gray[7]} sx={{ fontWeight: "bold", letterSpacing: "1px" }}>
+            Hello There!
+          </Text>
         </Group>
         {links}
       </Navbar.Section>
