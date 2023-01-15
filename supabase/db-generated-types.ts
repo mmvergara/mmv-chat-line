@@ -80,16 +80,19 @@ export interface Database {
           created_at: string
           id: string
           name: string
+          room_owner: string
         }
         Insert: {
           created_at?: string
           id: string
           name: string
+          room_owner: string
         }
         Update: {
           created_at?: string
           id?: string
           name?: string
+          room_owner?: string
         }
       }
     }
@@ -97,7 +100,14 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      already_a_participant: {
+        Args: { cur_user_id: string; cur_room_id: string }
+        Returns: boolean
+      }
+      room_exist: {
+        Args: { roomid: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

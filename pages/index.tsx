@@ -22,7 +22,7 @@ export default function Home() {
             Chat Line
           </Text>
           <Text component='p' sx={{ color: textColor }}>
-            A Light Simple ID based chat app made using Nextjs, Mantine UI, Supabase 🤯
+            A LightWeight Simple ID based chat app made using Nextjs, Mantine UI, Supabase 🤯
           </Text>
           <Paper
             display='flex'

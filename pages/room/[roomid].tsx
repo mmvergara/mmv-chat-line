@@ -1,5 +1,6 @@
-import { Avatar, Box, Button, Container, Paper, TextInput } from "@mantine/core";
+import { Button, Container, Paper, ScrollArea, TextInput } from "@mantine/core";
 import { IconSend } from "@tabler/icons";
+import ChatMessage from "../../components/ChatMessage";
 import useAppTheme from "../../hooks/useAppTheme";
 
 const Room: React.FC = () => {
@@ -17,26 +18,24 @@ const Room: React.FC = () => {
           backgroundColor: isDark ? colors.dark[6] : colors.gray[4],
         }}
       >
-        <Paper
+        <ScrollArea
+          style={{ height: 250 }}
           my={10}
           sx={{
             display: "flex",
             flexDirection: "column",
-            gap: "20px",
-            height: "200px",
+            height: "40vh",
             backgroundColor: isDark ? colors.dark[6] : colors.gray[4],
+            paddingRight: "20px",
           }}
         >
-
-          <Box component='article' sx={{ display: "flex", alignItems: "center", justifyContent: "end", gap: "10px" }}>
-            <Box component='span' p={10} bg={isDark ? colors.dark[5] : colors.gray[2]} sx={{ borderRadius: "5px" }}>
-              message
-            </Box>{" "}
-            <Avatar src='avatar.png' alt="it's me" radius='xl' />
-          </Box>
-          <Box component='article'>message</Box>
-        </Paper>
+          <ChatMessage author={"sososo"} isAuthor={false} message={"sample mesage"} isSecondLastMsgAuthor={false} />
+          <ChatMessage author={"sososo"} isAuthor={false} message={"sample mesage"} isSecondLastMsgAuthor={true} />
+          <ChatMessage author={"sososo"} isAuthor={true} message={"sample mesage"} isSecondLastMsgAuthor={false} />
+          <ChatMessage author={"sososo"} isAuthor={true} message={"sample mesage"} isSecondLastMsgAuthor={true} />
+        </ScrollArea>
         <Paper
+          component='form'
           shadow='xs'
           sx={{
             display: "flex",
@@ -51,9 +50,9 @@ const Room: React.FC = () => {
             type='text'
             name='roomid'
             withAsterisk
-            sx={{ width: "100%", paddingRight: "1em" }}
+            sx={{ width: "100%" }}
             rightSection={
-              <Button>
+              <Button type='submit' sx={{ borderRadius: "0 2px 2px 0px", marginRight: "1.3em" }}>
                 <IconSend size={20} />
               </Button>
             }

@@ -1,24 +1,44 @@
-import { Button, Container, Loader, Paper, Text, TextInput } from "@mantine/core";
-import { IconMail, IconUserPlus } from "@tabler/icons";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { Button, Container, CopyButton, Loader, Paper, Text, TextInput } from "@mantine/core";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { DBTypes } from "../../supabase/db-types";
 import useAppTheme from "../../hooks/useAppTheme";
 import { SyntheticEvent, useState } from "react";
+import uniqid from "uniqid";
+import { showNotification } from "@mantine/notifications";
 
 const CreateRoom: React.FC = () => {
   const supabase = useSupabaseClient<DBTypes>();
-  const { colors, isDark } = useAppTheme();
+  const user = useUser();
   const router = useRouter();
+  const { colors, isDark } = useAppTheme();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [created, setIsCreated] = useState<boolean>(false);
+  const [roomName, setRoomName] = useState<string>("");
+  const [roomId, setRoomdId] = useState<null | string>(null);
+  const handleCreateNewRoom = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (!user?.id) return;
+    setIsLoading(true);
 
-  const handleCreateNewRoom = async (e: SyntheticEvent) => {};
+    const newRoomId = uniqid(roomName);
+    const { error } = await supabase.from("rooms").insert({ room_owner: user.id, name: roomName, id: newRoomId });
+    if (error) {
+      console.log(error);
+      showNotification({ message: error.message, color: "red" });
+      return setIsLoading(false);
+    }
+
+    setRoomdId(newRoomId);
+    setIsLoading(false);
+    setIsCreated(true);
+  };
   return (
     <Container size={600} p={20}>
       <Paper
         component='form'
         shadow='xs'
-        onSubmit={() => {}}
+        onSubmit={handleCreateNewRoom}
         p='md'
         sx={{
           display: "flex",
@@ -27,21 +47,50 @@ const CreateRoom: React.FC = () => {
           backgroundColor: isDark ? colors.dark[6] : colors.gray[4],
         }}
       >
-        <Text component='h1' align='center' size='xl'>
-          Join Room
-        </Text>
-        <TextInput
-          variant='filled'
-          placeholder=''
-          type='text'
-          label='Room ID'
-          name='roomid'
-          withAsterisk
-          inputWrapperOrder={["label", "input", "description", "error"]}
-        />
-        <Button type='submit' variant='gradient' mt={15} sx={{ width: "auto" }}>
-          {isLoading ? <Loader color='white' size='sm' /> : "Join"}
-        </Button>
+        {created && roomId ? (
+          <>
+            <Text component='h1' align='center' size='xl'>
+              New Room ID | <span>asdasd</span>
+            </Text>
+
+            <CopyButton value={roomId}>
+              {({ copied, copy }) => (
+                <Button color={copied ? "teal" : "blue"} onClick={copy} mt={15}>
+                  {copied ? "Copied to Clipboard!" : "Copy Room ID"}
+                </Button>
+              )}
+            </CopyButton>
+
+            <Button
+              type='button'
+              onClick={() => router.push(`/room/${roomId}`)}
+              variant='gradient'
+              mt={15}
+              sx={{ width: "auto" }}
+            >
+              Join the Room!
+            </Button>
+          </>
+        ) : (
+          <>
+            <Text component='h2' align='center' size='xl'>
+              Create New Room
+            </Text>
+            <TextInput
+              mt={10}
+              variant='filled'
+              placeholder='Room Name'
+              type='text'
+              value={roomName}
+              onChange={(e) => setRoomName(e.target?.value.trim())}
+              withAsterisk
+              inputWrapperOrder={["label", "input", "description", "error"]}
+            />
+            <Button type='submit' variant='gradient' mt={15} sx={{ width: "auto" }}>
+              {isLoading ? <Loader color='white' size='sm' /> : "Create Room"}
+            </Button>
+          </>
+        )}
       </Paper>
     </Container>
   );
