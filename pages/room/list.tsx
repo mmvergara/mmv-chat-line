@@ -46,12 +46,6 @@ const RoomList: React.FC = () => {
             <>
               <Skeleton height={8} mt={6} width='59%' radius='xl' />
               <Skeleton height={8} mt={6} width='50%' radius='xl' />
-              <Skeleton height={8} mt={6} width='55%' radius='xl' />
-              <Skeleton height={8} mt={6} width='50%' radius='xl' />
-              <Skeleton height={8} mt={6} width='59%' radius='xl' />
-              <Skeleton height={8} mt={6} width='50%' radius='xl' />
-              <Skeleton height={8} mt={6} width='55%' radius='xl' />
-              <Skeleton height={8} mt={6} width='50%' radius='xl' />
             </>
           )}
           {rooms.length > 0 ? (
@@ -72,7 +66,7 @@ const RoomList: React.FC = () => {
               );
             })
           ) : (
-            <Text>Empty 🤯</Text>
+            <>{!isFetching && <Text>Empty 🤯</Text>}</>
           )}
         </Paper>
       </Paper>

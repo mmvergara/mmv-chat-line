@@ -33,6 +33,7 @@ export interface Database {
           message: string
           room_id: string
           user_id: string
+          user_username: string
         }
         Insert: {
           created_at?: string
@@ -40,6 +41,7 @@ export interface Database {
           message: string
           room_id: string
           user_id: string
+          user_username: string
         }
         Update: {
           created_at?: string
@@ -47,6 +49,7 @@ export interface Database {
           message?: string
           room_id?: string
           user_id?: string
+          user_username?: string
         }
       }
       room_participants: {

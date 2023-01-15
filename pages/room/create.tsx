@@ -50,7 +50,7 @@ const CreateRoom: React.FC = () => {
         {created && roomId ? (
           <>
             <Text component='h1' align='center' size='xl'>
-              New Room ID | <span>asdasd</span>
+              New Room ID | {roomId}
             </Text>
 
             <CopyButton value={roomId}>
