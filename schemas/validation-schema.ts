@@ -8,8 +8,13 @@ const stringRequired = (fieldName: string, min: number, max: number) => {
     .required(fieldName + " field is required.");
 };
 
-export const authValidationSchema = yup.object({
-  email: stringRequired("Username", 6, 50),
+export const signInValidationSchema = yup.object({
+  email: stringRequired("Email", 6, 50),
+  password: stringRequired("Password", 6, 150),
+});
+export const signUpValidationSchema = yup.object({
+  email: stringRequired("Email", 6, 50),
+  username: stringRequired("Username", 6, 50),
   password: stringRequired("Password", 6, 150),
 });
 

@@ -100,7 +100,7 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      already_a_participant: {
+      is_room_participant: {
         Args: { cur_user_id: string; cur_room_id: string }
         Returns: boolean
       }

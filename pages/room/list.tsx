@@ -11,16 +11,23 @@ const RoomList: React.FC = () => {
   const router = useRouter();
   const { colors, isDark, textColor } = useAppTheme();
   const [rooms, setRooms] = useState<Rooms[]>([]);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchRooms = async () => {
+      setIsFetching(true);
       const { data, error } = await supabase.from("rooms").select("*");
-      if (error) return showNotification({ message: error?.message || "", color: "red" });
+      if (error) {
+        setIsFetching(false);
+        return showNotification({ message: error?.message || "", color: "red" });
+      }
       if (!data) return;
+      setIsFetching(false);
       setRooms(data);
     };
     fetchRooms();
   }, [supabase]);
+
   return (
     <Container size={800} p={20}>
       <Paper component='section' shadow='xs' p='md' bg={isDark ? colors.gray[9] : "white"}>
@@ -35,9 +42,8 @@ const RoomList: React.FC = () => {
           bg={isDark ? colors.gray[8] : colors.gray[1]}
           sx={{ flexDirection: "column", gap: "20px", padding: "1em", margin: "1em 0em", flexWrap: "wrap" }}
         >
-          {rooms.length < 1 ? (
+          {isFetching && (
             <>
-              {" "}
               <Skeleton height={8} mt={6} width='59%' radius='xl' />
               <Skeleton height={8} mt={6} width='50%' radius='xl' />
               <Skeleton height={8} mt={6} width='55%' radius='xl' />
@@ -47,7 +53,8 @@ const RoomList: React.FC = () => {
               <Skeleton height={8} mt={6} width='55%' radius='xl' />
               <Skeleton height={8} mt={6} width='50%' radius='xl' />
             </>
-          ) : (
+          )}
+          {rooms.length > 0 ? (
             rooms.map((r) => {
               return (
                 <Paper
@@ -64,6 +71,8 @@ const RoomList: React.FC = () => {
                 </Paper>
               );
             })
+          ) : (
+            <Text>Empty 🤯</Text>
           )}
         </Paper>
       </Paper>

@@ -1,6 +1,6 @@
 import { Button, Container, Loader, Paper, Text, TextInput } from "@mantine/core";
 import { IconMail, IconPassword } from "@tabler/icons";
-import { authValidationSchema } from "../../schemas/validation-schema";
+import { signUpValidationSchema } from "../../schemas/validation-schema";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import useAppTheme from "../../hooks/useAppTheme";
@@ -14,16 +14,18 @@ const SignUp: React.FC = () => {
   const handleSignUp = async () => signUp.mutate();
 
   const formik = useFormik({
-    initialValues: { email: "", password: "" },
-    validationSchema: authValidationSchema,
+    initialValues: { email: "", password: "", username: "" },
+    validationSchema: signUpValidationSchema,
     onSubmit: handleSignUp,
   });
   const useSignUpParams = {
     email: formik.values.email,
     password: formik.values.password,
+    username: formik.values.username,
     supabase,
   };
   const signUp = useSignUp(useSignUpParams);
+  const usernameError = formik.touched.username && formik.errors.username;
   const emailError = formik.touched.email && formik.errors.email;
   const passwordError = formik.touched.password && formik.errors.password;
   return (
@@ -43,6 +45,19 @@ const SignUp: React.FC = () => {
         <Text component='h1' align='center' size='xl'>
           Sign Up
         </Text>
+        <TextInput
+          variant='filled'
+          placeholder='potato'
+          label='Username'
+          type='text'
+          name='username'
+          value={formik.values.username}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          withAsterisk
+          error={usernameError}
+          inputWrapperOrder={["label", "input", "description", "error"]}
+        />
         <TextInput
           icon={<IconMail />}
           variant='filled'

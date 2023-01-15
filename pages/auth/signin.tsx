@@ -1,6 +1,5 @@
 import { Button, Container, Loader, Paper, Text, TextInput } from "@mantine/core";
 import { IconMail, IconPassword, IconUserPlus } from "@tabler/icons";
-import { authValidationSchema } from "../../schemas/validation-schema";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { GithubIcon } from "@mantine/ds";
 import { useFormik } from "formik";
@@ -11,6 +10,7 @@ import useAppTheme from "../../hooks/useAppTheme";
 import Image from "next/image";
 import useSignIn from "../../hooks/useSignin";
 import { showNotification } from "@mantine/notifications";
+import { signInValidationSchema } from "../../schemas/validation-schema";
 
 const SignUp: React.FC = () => {
   const supabase = useSupabaseClient<DBTypes>();
@@ -27,7 +27,7 @@ const SignUp: React.FC = () => {
 
   const formik = useFormik({
     initialValues: { email: "", password: "" },
-    validationSchema: authValidationSchema,
+    validationSchema: signInValidationSchema,
     onSubmit: handleSignIn,
   });
 
