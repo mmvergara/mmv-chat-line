@@ -20,7 +20,13 @@ const signUp = async ({ email, password, username, supabase }: auth) => {
     showNotification({ message: error?.message, color: "red" });
     throw new Error(error?.message);
   }
-  await supabase.from("profiles").update({ username });
+  
+  const { data: userData, error: userErr } = await supabase.auth.getUser();
+  if (userErr) throw new Error(userErr.message);
+
+  const { error: updateUsernameErr } = await supabase.from("profiles").update({ username }).eq("id", userData.user.id);
+  if (updateUsernameErr) throw new Error(updateUsernameErr.message);
+
   Router.push("/");
   showNotification({ message: "Sign Up success", color: "green" });
   return data;
