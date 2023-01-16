@@ -3,11 +3,14 @@ import { GithubIcon } from "@mantine/ds";
 import { useRouter } from "next/router";
 import useAppTheme from "../hooks/useAppTheme";
 import Head from "next/head";
+import { useUser } from "@supabase/auth-helpers-react";
 
 export default function Home() {
   const { colors, isDark, textColor } = useAppTheme();
+  const user = useUser();
   const router = useRouter();
-  const handleGetStarted = () => router.push("/auth/signin");
+  const getStartedPath = user ? "/room/list" : "/auth/signin";
+  const handleGetStarted = () => router.push(getStartedPath);
   return (
     <>
       <Head>
@@ -36,7 +39,9 @@ export default function Home() {
               <Text mr={6}>Github Repo</Text>
               <GithubIcon size={16} />
             </Button>
-            <Button variant='light'>Documentation 📃</Button>
+            <Button component='a' href='https://mmv-docs.vercel.app/' target='_blank' rel="noopener noreferrer" variant='light'>
+              Documentation 📃
+            </Button>
           </Paper>
         </Paper>
       </Container>

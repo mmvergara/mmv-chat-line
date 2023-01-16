@@ -15,9 +15,10 @@ const ChatMessageForm: React.FC<{ roomid?: string }> = ({ roomid }) => {
 
   const handleSendMessage = async (e: SyntheticEvent) => {
     e.preventDefault();
-    setIsSending(true);
+    if (message.length < 1) return;
     if (!roomid) return;
     if (!user?.id) return;
+    setIsSending(true);
 
     // Fetch user username
     const { data: userData, error: userErr } = await supabase
@@ -38,7 +39,7 @@ const ChatMessageForm: React.FC<{ roomid?: string }> = ({ roomid }) => {
       showNotification({ message: error.message, color: "red" });
       return setIsSending(false);
     }
-
+    setMessage("");
     setIsSending(false);
   };
   return (

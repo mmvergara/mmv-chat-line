@@ -103,7 +103,7 @@ const NavbarSimple = () => {
       <Navbar.Section grow>
         <Group className={classes.header} position='apart'>
           <Text color={isDark ? colors.dark[1] : colors.gray[7]} sx={{ fontWeight: "bold", letterSpacing: "1px" }}>
-            Hello There!
+            Hello There!  
           </Text>
         </Group>
         {links}
