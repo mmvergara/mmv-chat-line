@@ -1,9 +1,9 @@
 import { Button, Container, Paper, Text } from "@mantine/core";
 import { GithubIcon } from "@mantine/ds";
 import { useRouter } from "next/router";
+import { useUser } from "@supabase/auth-helpers-react";
 import useAppTheme from "../hooks/useAppTheme";
 import Head from "next/head";
-import { useUser } from "@supabase/auth-helpers-react";
 
 export default function Home() {
   const { colors, isDark, textColor } = useAppTheme();
@@ -39,7 +39,13 @@ export default function Home() {
               <Text mr={6}>Github Repo</Text>
               <GithubIcon size={16} />
             </Button>
-            <Button component='a' href='https://mmv-docs.vercel.app/' target='_blank' rel="noopener noreferrer" variant='light'>
+            <Button
+              component='a'
+              href='https://mmv-docs.vercel.app/'
+              target='_blank'
+              rel='noopener noreferrer'
+              variant='light'
+            >
               Documentation 📃
             </Button>
           </Paper>

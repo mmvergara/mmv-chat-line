@@ -1,11 +1,11 @@
 import { IconLogout, IconLogin, IconHome2, TablerIcon, IconList } from "@tabler/icons";
-import { IconSquareRoundedPlus, IconWalk, IconSettings } from "@tabler/icons";
 import { createStyles, Navbar, Group, Text } from "@mantine/core";
+import { IconSquareRoundedPlus, IconWalk } from "@tabler/icons";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import Link from "next/link";
-import useAppTheme from "../../hooks/useAppTheme";
-import { SyntheticEvent } from "react";
 import { showNotification } from "@mantine/notifications";
+import { SyntheticEvent } from "react";
+import useAppTheme from "../../hooks/useAppTheme";
+import Link from "next/link";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
@@ -75,10 +75,9 @@ const NavbarSimple = () => {
   const data: linkData[] = [
     { show: true, link: "/", label: "Home", icon: IconHome2 },
     { show: !!user, link: "/room/list", label: "My Rooms", icon: IconList },
-    { show: true, link: "/room/join", label: "Join Room", icon: IconWalk },
+    { show: !!user, link: "/room/join", label: "Join Room", icon: IconWalk },
     { show: !!user, link: "/room/create", label: "Create New Room", icon: IconSquareRoundedPlus },
     { show: !user, link: "/auth/signin", label: "Sign In", icon: IconLogin },
-    { show: !!user, link: "/settings", label: "Settings", icon: IconSettings },
   ];
 
   const links = data.map((link) => {
@@ -103,12 +102,11 @@ const NavbarSimple = () => {
       <Navbar.Section grow>
         <Group className={classes.header} position='apart'>
           <Text color={isDark ? colors.dark[1] : colors.gray[7]} sx={{ fontWeight: "bold", letterSpacing: "1px" }}>
-            Hello There!  
+            Hello There!
           </Text>
         </Group>
         {links}
       </Navbar.Section>
-
       {user && (
         <Navbar.Section className={classes.footer}>
           <Link href='#' className={classes.link} onClick={handleLogout}>

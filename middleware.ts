@@ -20,15 +20,13 @@ const redirectTo = (req: NextRequest, redirect: string) => {
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareSupabaseClient<DBTypes>({ req, res });
+  const pathName = req.nextUrl.pathname;
 
-  if (req.nextUrl.pathname.startsWith("/auth")) {
+  const redirectToHome = ["/auth", "/room/create", "/room/list"];
+
+  if (redirectToHome.some((x) => pathName.startsWith(x))) {
     const session = await getSession(supabase);
     if (session?.user) return redirectTo(req, "/");
-    return res;
-  }
-  if (req.nextUrl.pathname.startsWith("/room/create")) {
-    const session = await getSession(supabase);
-    if (!session?.user) return redirectTo(req, "/");
     return res;
   }
 
