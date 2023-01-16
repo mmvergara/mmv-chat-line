@@ -1,16 +1,16 @@
 import { Button, Container, CopyButton, Loader, Paper, Text, TextInput } from "@mantine/core";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { SyntheticEvent, useState } from "react";
+import { showNotification } from "@mantine/notifications";
 import { useRouter } from "next/router";
 import { DBTypes } from "../../supabase/db-types";
 import useAppTheme from "../../hooks/useAppTheme";
-import { SyntheticEvent, useState } from "react";
 import uniqid from "uniqid";
-import { showNotification } from "@mantine/notifications";
 
 const CreateRoom: React.FC = () => {
-  const supabase = useSupabaseClient<DBTypes>();
   const user = useUser();
   const router = useRouter();
+  const supabase = useSupabaseClient<DBTypes>();
   const { colors, isDark } = useAppTheme();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [created, setIsCreated] = useState<boolean>(false);
@@ -20,7 +20,6 @@ const CreateRoom: React.FC = () => {
     e.preventDefault();
     if (!user?.id) return;
     setIsLoading(true);
-
     const newRoomId = uniqid(roomName);
     const { error } = await supabase.from("rooms").insert({ room_owner: user.id, name: roomName, id: newRoomId });
     if (error) {
@@ -28,7 +27,6 @@ const CreateRoom: React.FC = () => {
       showNotification({ message: error.message, color: "red" });
       return setIsLoading(false);
     }
-
     setRoomdId(newRoomId);
     setIsLoading(false);
     setIsCreated(true);
@@ -52,7 +50,6 @@ const CreateRoom: React.FC = () => {
             <Text component='h1' align='center' size='xl'>
               New Room ID | {roomId}
             </Text>
-
             <CopyButton value={roomId}>
               {({ copied, copy }) => (
                 <Button color={copied ? "teal" : "blue"} onClick={copy} mt={15}>
@@ -60,7 +57,6 @@ const CreateRoom: React.FC = () => {
                 </Button>
               )}
             </CopyButton>
-
             <Button
               type='button'
               onClick={() => router.push(`/room/${roomId}`)}
