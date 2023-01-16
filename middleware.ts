@@ -22,7 +22,7 @@ export async function middleware(req: NextRequest) {
   const supabase = createMiddlewareSupabaseClient<DBTypes>({ req, res });
   const pathName = req.nextUrl.pathname;
 
-  const redirectToHome = ["/auth", "/room/create", "/room/list"];
+  const redirectToHome = ["/auth"];
 
   if (redirectToHome.some((x) => pathName.startsWith(x))) {
     const session = await getSession(supabase);
