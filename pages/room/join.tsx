@@ -18,7 +18,6 @@ const JoinRoom: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
     if (roomId.length < 1 || !user?.id) return;
-
     const { error } = await supabase.from("room_participants").insert({ room_id: roomId, user_id: user.id });
     if (error) {
       showNotification({

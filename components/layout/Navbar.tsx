@@ -6,6 +6,7 @@ import { showNotification } from "@mantine/notifications";
 import { SyntheticEvent } from "react";
 import useAppTheme from "../../hooks/useAppTheme";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
@@ -71,6 +72,7 @@ type props = {
 
 const NavbarSimple: React.FC<props> = ({ toggleNav }) => {
   const user = useUser();
+  const router = useRouter();
   const supabase = useSupabaseClient();
   const { classes, cx } = useStyles();
   const { colors, isDark } = useAppTheme();
@@ -98,6 +100,7 @@ const NavbarSimple: React.FC<props> = ({ toggleNav }) => {
     const { error } = await supabase.auth.signOut();
     if (error) return showNotification({ message: error.message, color: "red" });
     showNotification({ message: "Sign out success", color: "green" });
+    router.push("/");
   };
 
   return (
@@ -112,7 +115,7 @@ const NavbarSimple: React.FC<props> = ({ toggleNav }) => {
       </Navbar.Section>
       {user && (
         <Navbar.Section className={classes.footer}>
-          <Link href='#' className={classes.link} onClick={handleLogout}>
+          <Link href='/' className={classes.link} onClick={handleLogout}>
             <IconLogout className={classes.linkIcon} stroke={1.5} />
             <span>Logout</span>
           </Link>

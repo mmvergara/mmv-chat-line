@@ -20,10 +20,12 @@ const SignUp: React.FC = () => {
     await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: "/" } });
   };
 
-  const handleSignIn = async () => {
-    login.mutate();
+  const handleSignIn = async () => login.mutate();
+  const handleDummyAccLogin = async () => {
+    await formik.setFieldValue("email", "salt22@gmail.com");
+    await formik.setFieldValue("password", "salt1234");
+    await handleSignIn();
   };
-
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: signInValidationSchema,
@@ -120,6 +122,9 @@ const SignUp: React.FC = () => {
           })}
         >
           Login with Github
+        </Button>
+        <Button type='button' mt={10} variant='default' color='gray' onClick={handleDummyAccLogin}>
+          <Text pl={10}>Sign in with a dummy account!</Text>
         </Button>
       </Paper>
     </Container>
