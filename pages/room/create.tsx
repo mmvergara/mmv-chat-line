@@ -16,6 +16,7 @@ const CreateRoom: React.FC = () => {
   const [created, setIsCreated] = useState<boolean>(false);
   const [roomName, setRoomName] = useState<string>("");
   const [roomId, setRoomdId] = useState<null | string>(null);
+
   const handleCreateNewRoom = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (!user?.id) return;
@@ -31,6 +32,7 @@ const CreateRoom: React.FC = () => {
     setIsLoading(false);
     setIsCreated(true);
   };
+
   return (
     <Container size={600} p={20}>
       <Paper
@@ -76,6 +78,7 @@ const CreateRoom: React.FC = () => {
               mt={10}
               variant='filled'
               placeholder='Room Name'
+              description='minimum of 7 characters and no spaces'
               type='text'
               value={roomName}
               onChange={(e) => setRoomName(e.target?.value.trim())}

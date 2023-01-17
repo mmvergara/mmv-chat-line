@@ -7,14 +7,14 @@
 create table profiles (
   id uuid references auth.users on delete cascade not null primary key,
   username text unique,
-  constraint username_length check (char_length(username) >= 2)
+  constraint username_length check (char_length(username) > 3)
 );
 alter table profiles
   enable row level security;
 
 CREATE TABLE rooms (
     id text PRIMARY KEY,
-    name VARCHAR(255) NOT NULL CHECK (char_length(name) > 5),
+    name VARCHAR(255) NOT NULL CHECK (char_length(name) > 0),
     room_owner uuid REFERENCES profiles(id) ON DELETE CASCADE NOT NULL,
     created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );

@@ -46,7 +46,7 @@ const ChatMessageContainer: React.FC<props> = ({ messages, isFetching }) => {
         );
       })}
       {isFetching && <ChatMessageSkeleton />}
-      <div ref={bottomDivRef}>a</div>
+      <div ref={bottomDivRef}></div>
     </ScrollArea>
   );
 };

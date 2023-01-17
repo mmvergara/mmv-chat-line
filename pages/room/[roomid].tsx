@@ -30,7 +30,7 @@ const Room: NextPage = () => {
         }
       );
     newMessageListener.subscribe();
-
+    
     const fetchChatMessages = async () => {
       const { data, error } = await supabase.from("room_messages").select("*").eq("room_id", roomid).limit(15);
       if (!data) return showNotification({ message: error.message, color: "red" });
