@@ -1,5 +1,6 @@
 import { Button, Container, Loader, Paper, Text, TextInput } from "@mantine/core";
 import { IconMail, IconPassword, IconUserPlus } from "@tabler/icons";
+import { signInValidationSchema } from "../../schemas/validation-schema";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { GithubIcon } from "@mantine/ds";
 import { useFormik } from "formik";
@@ -9,8 +10,6 @@ import { DBTypes } from "../../supabase/db-types";
 import useAppTheme from "../../hooks/useAppTheme";
 import Image from "next/image";
 import useSignIn from "../../hooks/useSignin";
-import { showNotification } from "@mantine/notifications";
-import { signInValidationSchema } from "../../schemas/validation-schema";
 
 const SignUp: React.FC = () => {
   const supabase = useSupabaseClient<DBTypes>();
@@ -121,13 +120,6 @@ const SignUp: React.FC = () => {
           })}
         >
           Login with Github
-        </Button>
-        <Button
-          onClick={() => {
-            showNotification({ message: "yoyo", color: "red" });
-          }}
-        >
-          TESTT
         </Button>
       </Paper>
     </Container>
