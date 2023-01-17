@@ -1,6 +1,4 @@
- 
-
--- disable email verify
+ -- disable email verify
 -- enable replication for room table
 
 -- Tables
