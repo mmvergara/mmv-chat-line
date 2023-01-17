@@ -5,9 +5,10 @@ import useAppTheme from "../../hooks/useAppTheme";
 import Navbar from "./Navbar";
 
 const Layout: React.FC<{ children: JSX.Element[] | JSX.Element }> = ({ children }) => {
-  const [opened, setOpened] = useState(false);
+  const [openNav, setOpenNav] = useState(false);
   const { colors, isDark, toggleColorScheme } = useAppTheme();
 
+  const toggleNav = () => setOpenNav((o) => !o);
   return (
     <AppShell
       styles={{
@@ -18,15 +19,15 @@ const Layout: React.FC<{ children: JSX.Element[] | JSX.Element }> = ({ children 
       }}
       navbarOffsetBreakpoint='lg'
       navbar={
-        <NavbarContainer withBorder={false} hiddenBreakpoint='lg' hidden={!opened} width={{ sm: 200, lg: 300 }}>
-          <Navbar />
+        <NavbarContainer withBorder={false} hiddenBreakpoint='lg' hidden={!openNav} width={{ sm: 200, lg: 300 }}>
+          <Navbar toggleNav={toggleNav} />
         </NavbarContainer>
       }
       header={
         <Header bg={isDark ? colors.dark[7] : colors.gray[4]} height={{ base: 50, md: 70 }} p='md'>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "100%" }}>
             <MediaQuery largerThan='lg' styles={{ display: "none" }}>
-              <Burger opened={opened} onClick={() => setOpened((o) => !o)} size='sm' color={colors.gray[6]} mr='xl' />
+              <Burger opened={openNav} onClick={toggleNav} size='sm' color={colors.gray[6]} mr='xl' />
             </MediaQuery>
             <h2 style={{ color: isDark ? "white" : "black" }}>Chat Line</h2>
             <ActionIcon variant='outline' onClick={() => toggleColorScheme()} title='Toggle color scheme'>

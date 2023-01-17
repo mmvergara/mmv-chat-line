@@ -34,7 +34,7 @@ const ChatMessageForm: React.FC<{ roomid?: string }> = ({ roomid }) => {
     // Insert message
     const { error } = await supabase
       .from("room_messages")
-      .insert({ message, user_id: user.id, room_id: roomid, user_username: userData?.username || "" });
+      .insert({ message:message.trim(), user_id: user.id, room_id: roomid, user_username: userData?.username || "" });
     if (error) {
       showNotification({ message: error.message, color: "red" });
       return setIsSending(false);
@@ -61,7 +61,7 @@ const ChatMessageForm: React.FC<{ roomid?: string }> = ({ roomid }) => {
         name='roomid'
         withAsterisk
         value={message}
-        onChange={(e) => setMessage(e.target.value.trim())}
+        onChange={(e) => setMessage(e.target.value)}
         sx={{ width: "100%" }}
         rightSection={
           <Button type='submit' sx={{ borderRadius: "0 2px 2px 0px", marginRight: "1.3em" }}>

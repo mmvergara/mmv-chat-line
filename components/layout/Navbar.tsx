@@ -65,8 +65,11 @@ const useStyles = createStyles((theme, _params, getRef) => {
 });
 
 type linkData = { show: boolean; link: string; label: string; icon: TablerIcon };
+type props = {
+  toggleNav: () => void;
+};
 
-const NavbarSimple = () => {
+const NavbarSimple: React.FC<props> = ({ toggleNav }) => {
   const user = useUser();
   const supabase = useSupabaseClient();
   const { classes, cx } = useStyles();
@@ -83,7 +86,7 @@ const NavbarSimple = () => {
   const links = data.map((link) => {
     if (!link.show) return <div key={link.label}></div>;
     return (
-      <Link className={cx(classes.link)} href={link.link} key={link.label}>
+      <Link onClick={toggleNav} className={cx(classes.link)} href={link.link} key={link.label}>
         <link.icon className={classes.linkIcon} stroke={1.5} />
         <span>{link.label}</span>
       </Link>
