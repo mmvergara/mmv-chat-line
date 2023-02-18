@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { DBTypes } from "../../supabase/db-types";
 import useAppTheme from "../../hooks/useAppTheme";
 import uniqid from "uniqid";
+import Head from "next/head";
 
 const CreateRoom: React.FC = () => {
   const user = useUser();
@@ -35,6 +36,9 @@ const CreateRoom: React.FC = () => {
 
   return (
     <Container size={600} p={20}>
+      <Head>
+        <title>Create Room</title>
+      </Head>
       <Paper
         component='form'
         shadow='xs'

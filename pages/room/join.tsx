@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { DBTypes } from "../../supabase/db-types";
 import useAppTheme from "../../hooks/useAppTheme";
 import { showNotification } from "@mantine/notifications";
+import Head from "next/head";
 
 const JoinRoom: React.FC = () => {
   const supabase = useSupabaseClient<DBTypes>();
@@ -32,6 +33,9 @@ const JoinRoom: React.FC = () => {
   };
   return (
     <Container size={600} p={20}>
+      <Head>
+        <title>Join Room</title>
+      </Head>
       <Paper
         component='form'
         shadow='xs'

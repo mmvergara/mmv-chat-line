@@ -9,6 +9,7 @@ import { NextPage } from "next";
 import ChatMessageForm from "../../components/ChatMessageForm";
 import useAppTheme from "../../hooks/useAppTheme";
 import ChatMessageContainer from "../../components/ChatMessagesContainer";
+import Head from "next/head";
 
 const Room: NextPage = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ const Room: NextPage = () => {
         }
       );
     newMessageListener.subscribe();
-    
+
     const fetchChatMessages = async () => {
       const { data, error } = await supabase.from("room_messages").select("*").eq("room_id", roomid).limit(15);
       if (!data) return showNotification({ message: error.message, color: "red" });
@@ -45,6 +46,9 @@ const Room: NextPage = () => {
 
   return (
     <Container size={800} p={20}>
+      <Head>
+        <title>Room - {roomid}</title>
+      </Head>
       <Paper
         shadow='xs'
         p='md'

@@ -1,6 +1,7 @@
 import { Button, Container, Paper, Skeleton, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useAppTheme from "../../hooks/useAppTheme";
@@ -30,6 +31,9 @@ const RoomList: React.FC = () => {
 
   return (
     <Container size={800} p={20}>
+      <Head>
+        <title>Room List</title>
+      </Head>
       <Paper component='section' shadow='xs' p='md' bg={isDark ? colors.gray[9] : "white"}>
         <Text sx={{ color: textColor }} component='h1' size={30}>
           My Rooms
